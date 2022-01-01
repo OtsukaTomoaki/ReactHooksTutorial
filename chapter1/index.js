@@ -1,4 +1,5 @@
 import { sampleVariable, sampleFunc } from "./modules/namedExportModule.js"
+import App from "./modules/defaultExportModule.js"
 
 function myReduce() {
     const sampleArrayForReduce = [0, 1, 2, 3];
@@ -13,3 +14,4 @@ myReduce();
 
 console.log(sampleVariable);
 console.log(sampleFunc());
+console.log(App())
