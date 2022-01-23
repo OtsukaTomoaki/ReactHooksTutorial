@@ -13,7 +13,21 @@
         <script type="text/babel">
             //いいね！と表示されるだけのLikesButtonコンポーネント
             const LikeButton = () => {
-                return "いいね！";
+                //useState()でstateの管理
+                //likedにいいね！前後（false, true）の状態を持たせている
+                //liledの初期表示はfalse
+                //CDNでuseStateを利用したい場合はReact.useState()と書く
+                const [liked, setLiked] = React.useState(false);
+
+                //いいね！をトグルする
+                const toggleLiked = () => setLiked(!liked)
+
+                return (
+                    //ボタンをクリックすると、trueとfasleがトグルする
+                    <button className="likeButton" onClick={toggleLiked}>
+                        {liked ? "いいね済" : "いいね前"}
+                    </button>
+                );
             }
             const domContainer = document.querySelector("#likesButtonContainer");
             //ReactがLikeButtonコンポーネントをDOMに変換して
