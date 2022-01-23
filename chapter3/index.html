@@ -5,9 +5,11 @@
         <meta charset="UTF-8" />
         <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <!-- JSXを使用するためにbabelが必要 -->
         <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     </head>
     <body>
+        <div id="nameInputContainer"></div>
         <div id="likesButtonContainer"></div>
 
         <script type="text/babel">
@@ -29,10 +31,35 @@
                     </button>
                 );
             }
-            const domContainer = document.querySelector("#likesButtonContainer");
+            const domContainerButton = document.querySelector("#likesButtonContainer");
             //ReactがLikeButtonコンポーネントをDOMに変換して
             //HTMLのDOMコンテナに挿入する
-            ReactDOM.render(<LikeButton />, domContainer);
+            ReactDOM.render(<LikeButton />, domContainerButton);
+
+            //テキストエリアへの入力値を保持するNameInputコンポーネント
+            //コンポーネント名 = 関数名は 必ず頭文字を大文字にする
+            //（アッパーキャメルケース記法）
+            const NameInput = () => {
+                //useStateでstateの管理
+                //nameに、inputテキスト入力エリアへの状態を持たせている
+                //nameの初期状態は"○○"
+                //CDNでReactを動かす場合は、React.useState()と書く
+                const [name, setName] = React.useState("○○")
+                //入力値を現在の状態nameにセットする関数　handleOnChangeを定義
+                const handleOnChange = (event) => setName(event.target.value);
+
+                return (
+                    <div>
+                        {/*入力したテキストの状態を setNameで現在の状態であるnameにセット*/}
+                        {/*入力したテキストの状態を　name　に保持させている*/}
+                        <input type="text" onChange={handleOnChange} />
+                        {/*現在の name の状態を表示*/}
+                        <p>こんにちは、{name}さん！</p>
+                    </div>
+                )
+            }
+            const domContainerText = document.querySelector("#nameInputContainer");
+            ReactDOM.render(<NameInput />, domContainerText)
         </script>
     </body>
 </html>
