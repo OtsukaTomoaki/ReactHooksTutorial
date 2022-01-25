@@ -146,6 +146,71 @@ const InputCheckBox = () => {
   );
 };
 
+//チェックボックス(複数のcheckedの状態を管理)
+const multiCheckValues = [
+  { id: 1, item: "フロントエンド" },
+  { id: 2, item: "バックエンド" },
+  { id: 3, item: "ネイティブ" }
+];
+
+const MultiCheckButtonItems = ({ onChange, checked }) => {
+  return multiCheckValues.map((value) => {
+    return (
+      //key属性にvalue.idを指定する
+      <lebel key={value.id}>
+        <input
+          type="checkbox"
+          value={value.item}
+          onChange={onChange}
+          checked={checked[value.item]}
+        />
+        {value.item}
+      </lebel>
+    );
+  });
+};
+
+const InputMultiCheckBox = () => {
+  //現在選択されているチェックボックスの状態 checkedValuesと
+  //checkedValuesの状態を更新する関数 setCheckedValues
+  //const [状態変数, 状態を変更するための関数] = useState(状態の初期値)
+  const [checkedValues, setCheckedValues] = useState(
+    multiCheckValues.reduce((acc, cur) => {
+      acc[cur.item] = false;
+      return acc;
+    }, {})
+  );
+  console.log(checkValues);
+  const handelChange = (e) => {
+    //チェックされたプロパティの状態が更新され、
+    //checkedValuesの状態が更新される
+    setCheckedValues({ ...checkedValues, [e.target.value]: e.target.checked });
+  };
+
+  const stateOfCheckedValues = Object.entries(checkedValues).reduce(
+    (pre, [key, value]) => {
+      //取り出したプロパティのvalueがtrueの場合、keyを
+      //pushして新しい配列 stateOfCheckedValuesを作成
+      console.log(pre, key, value);
+
+      value && pre.push(key);
+      return pre;
+    },
+    []
+  );
+  return (
+    <div className="App">
+      <p>
+        {/* チェックボックスは onChangeでcheckedValuesが更新される
+        ことで、stateOfCheckedValuesも更新され、画面上に表示される */}
+        現在選択されている値：
+        <b>{stateOfCheckedValues.join(", ")}</b>
+      </p>
+      <MultiCheckButtonItems onChange={handelChange} checked={checkValues} />
+    </div>
+  );
+};
+
 export default function App() {
   return (
     <>
@@ -153,6 +218,7 @@ export default function App() {
       <InputSelectBox />
       <InputRadio />
       <InputCheckBox />
+      <InputMultiCheckBox />
     </>
   );
 }
