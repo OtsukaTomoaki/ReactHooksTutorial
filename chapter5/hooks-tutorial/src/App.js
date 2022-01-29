@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import "./App.css";
 import { TimerCounter } from "./Timer";
 
@@ -12,6 +12,20 @@ const Button = React.memo(({ counterState, buttonValue }) => {
   console.log(`${buttonValue}がクリックされました！`);
   return <button onClick={counterState}>{buttonValue}</button>
 });
+
+//useMemo
+//正方形の面積を求めるsquare関数を宣言
+const square = (params) => {
+  //[...Array(n).keys()]は、0からn-1までの整数が順番に並んだ配列を作る
+  const testData = [...Array(1000).keys()];
+
+  //パフォーマンスを観察したいので、わざと重い処理を記述
+  testData.forEach(() => {
+    console.log(`[計算： B + 1]がボタンクリックされ、square関数実行、
+    ループ処理を${testData.length}回実行中...`)
+  });
+  return params * params;
+};
 
 //Memo
 //CountResultコンポーネント（子）を作成
@@ -42,6 +56,13 @@ const CounterMemo = () => {
   //Bボタンのstateセット用
   const countIncrementB = useCallback(() => setCountStateB((prevCountStateB) => prevCountStateB + 1), [countStateB]);
   
+  //正方形の面積をcountStateBを使って求めた計算結果
+  //useMemo()でラップして、計算結果をメモ化している
+  //第二引数である依存配列にcountStateBを渡しているので、
+  //countStateAを更新してもcountStateBが更新されなければ
+  //メモ化された計算結果を再利用するためsquare関数は実行されない
+  const squareArea = useMemo(() => square(countStateB), [countStateB]);
+
   return (
     <>
       {/* 現在のcountStateA */}
@@ -52,6 +73,9 @@ const CounterMemo = () => {
       <Button counterState={countIncrementA} buttonValue="Aボタン" />
       {/* Bボタン */}
       <Button counterState={countIncrementB} buttonValue="Bボタン" />
+      {/* Bボタンから正方形の面積を求める */}
+      <p>【正方形の面積】</p>
+      <p>計算結果B * 計算結果B = {squareArea}</p>
     </>
   );
 };
