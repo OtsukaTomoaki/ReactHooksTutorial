@@ -1,7 +1,9 @@
-import React, { useState, useCallback, useMemo, useRef } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import "./App.css";
 import { TimerCounter } from "./Timer";
 import { SampleComponent } from "./SampleComponent";
+import { TextProvider } from "./TextProvider";
+import { First } from "./First";
 
 //useCallback
 //Buttonコンポーネント（子）を作成
@@ -88,6 +90,11 @@ export default function App() {
       <TimerCounter/>
       <CounterMemo />
       <SampleComponent />
+      <div>
+        <TextProvider>
+          <First />
+        </TextProvider>
+      </div>
     </>
   );
 }
