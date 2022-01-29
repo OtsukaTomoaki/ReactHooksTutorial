@@ -42,6 +42,25 @@ const Timer = () => {
   );
 };
 
+//Memo
+//CountResultコンポーネント（子）を作成
+//Counterコンポーネント（親）からtextとcountStateをpropsとして
+//受け取っているCOuntResultコンポーネント（子）をReact.memo()でラップ
+const CountResult = React.memo(({text, countState}) => {
+  //Counterコンポーネント（親）のボタンがクリックされて
+  //Counterコンポーネント（親）のもつcountStateが更新されたら
+  //CountResultコンポーネント（子）が再レンダリングされる
+  console.log(`${text}ボタンがクリックされました！`);
+  return (
+    <p>
+      {/* ボタン名とCounterコンポーネント（親）からpropsで受け取った現在のcountStateを表示 */}
+      {text}: {countState}
+    </p>
+  );
+})
+
+
+
 export default function App() {
   const [count, setCount] = useState(INITIAL_COUNT);
 
