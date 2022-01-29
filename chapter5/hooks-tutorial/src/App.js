@@ -2,6 +2,17 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import { TimerCounter } from "./Timer";
 
+//useCallback
+//Buttonコンポーネント（子）を作成
+//counterStateとbuttonValueをpropsとしてCounterコンポーネント（親）
+//から受け取っているButtonコンポーネント（子）をReact.memo()でラップ
+const Button = React.memo(({ counterState, buttonValue }) => {
+  //ボタンがクリックされて、Counterコンポーネント（親）のcountIncrement関数が
+  //更新されたらButtonコンポーネント（子）をReact.memo()でラップ
+  console.log(`${buttonValue}がクリックされました！`);
+  return <button onClick={counterState}>{buttonValue}</button>
+});
+
 //Memo
 //CountResultコンポーネント（子）を作成
 //Counterコンポーネント（親）からtextとcountStateをpropsとして
@@ -26,10 +37,10 @@ const CounterMemo = () => {
   const [countStateB, setCountStateB] = useState(0);
 
   //Aボタンのstateセット用countIncrementA関数、現在のcountStateAを引数で受け取ることができる
-  const countIncrementA = () => setCountStateA((prevCountStateA) => prevCountStateA + 1);
+  const countIncrementA = useCallback(() => setCountStateA((prevCountStateA) => prevCountStateA + 1), [countStateA]);
 
   //Bボタンのstateセット用
-  const countIncrementB = () => setCountStateB((prevCountStateB) => prevCountStateB + 1);
+  const countIncrementB = useCallback(() => setCountStateB((prevCountStateB) => prevCountStateB + 1), [countStateB]);
   
   return (
     <>
@@ -38,9 +49,9 @@ const CounterMemo = () => {
       {/* 現在のcountStateA */}
       <CountResult text="Bボタン" countState={countStateB} />
       {/* Aボタン */}
-      <button onClick={countIncrementA}>A ボタン</button>
+      <Button counterState={countIncrementA} buttonValue="Aボタン" />
       {/* Bボタン */}
-      <button onClick={countIncrementB}>B ボタン</button>
+      <Button counterState={countIncrementB} buttonValue="Bボタン" />
     </>
   );
 };
