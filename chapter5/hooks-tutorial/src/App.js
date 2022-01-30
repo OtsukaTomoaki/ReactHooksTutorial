@@ -7,6 +7,7 @@ import { First } from "./First";
 import { CountProvider } from "./CountProvider";
 import { Third2 } from "./Third";
 import { ParentComponent } from "./ParentComponent";
+import { CustomCounter } from "./CustomCounter";
 
 //useCallback
 //Buttonコンポーネント（子）を作成
@@ -102,6 +103,8 @@ export default function App() {
         </CountProvider>
         <ParentComponent />
       </div>
+      <p>カスタムカウンタ</p> 
+      <CustomCounter />
     </>
   );
 }
