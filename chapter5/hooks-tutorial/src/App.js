@@ -4,6 +4,8 @@ import { TimerCounter } from "./Timer";
 import { SampleComponent } from "./SampleComponent";
 import { TextProvider } from "./TextProvider";
 import { First } from "./First";
+import { CountProvider } from "./CountProvider";
+import { Third2 } from "./Third";
 
 //useCallback
 //Buttonコンポーネント（子）を作成
@@ -94,6 +96,9 @@ export default function App() {
         <TextProvider>
           <First />
         </TextProvider>
+        <CountProvider>
+          <Third2 />
+        </CountProvider>
       </div>
     </>
   );
