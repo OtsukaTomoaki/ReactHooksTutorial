@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import { useTodo } from "../hooks/useTodo";
 
 const TodoTitle = ({ title, as }) => {
@@ -34,7 +35,24 @@ const TodoList = ({ todoList }) => {
 };
 
 function App() {
-  const { todoList } = useTodo();
+  const { 
+    todoList,
+    addTodoListItem 
+  } = useTodo();
+
+  //useRefでrefオブジェクトを作成（Todo入力フォームで利用）
+  const inputEl = useRef(null);
+
+  //Todo入力フォームで入力された文字列を新しいTodoに登録するためのhandleAddTodoListItem関数を宣言
+  const handleAddTodoListItem = () => {
+    //何も入力されていない場合にクリックされても何も起きない
+    if (inputEl.current.value === "") return;
+
+    //テキストエリアに入力されたテキストを新規Todoとして追加。追加したら、テキストエリアをからの文字列にする
+    //「+ Todoを追加」ボタンをクリックで実行
+    addTodoListItem(inputEl.current.value);
+    inputEl.current.value = "";
+  };
 
   //console.logでコンソールに取得したTODOリストの情報を表示してみる
   console.log(todoList);
@@ -47,8 +65,8 @@ function App() {
   return (
     <>
       <TodoTitle title="TODO進捗管理" as="h1"/>
-      <textarea></textarea>
-      <button>+ TODOを追加</button>
+      <textarea ref={inputEl}></textarea>
+      <button onClick={handleAddTodoListItem}>+ TODOを追加</button>
       <TodoTitle title="未完了TODOリスト" as="h2"/>
       <TodoList todoList={todoInCompletedList} />
 

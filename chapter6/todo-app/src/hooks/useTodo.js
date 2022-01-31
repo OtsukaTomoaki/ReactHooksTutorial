@@ -43,7 +43,7 @@ export const useTodo = () => {
             done: false//デフォルトでfalse
         };
         return todoData.addTodoData(newTodoItem).then((addedTodo) => {
-            setTodoList([addedTodo], ...todoList);
+            setTodoList([addedTodo, ...todoList]);
         });
     };
 
