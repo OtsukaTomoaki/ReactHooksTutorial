@@ -21,7 +21,7 @@ export const deleteTodoData = async (id) => {
 };
 
 //更新
-export const updateTodoData = async (todo) => {
-    const response = await axios.put(`${todoDataUrl}/${todo.id}`, todo);
+export const updateTodoData = async (id, todo) => {
+    const response = await axios.put(`${todoDataUrl}/${id}`, todo);
     return response.data;
 };

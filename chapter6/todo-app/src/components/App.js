@@ -10,24 +10,27 @@ const TodoTitle = ({ title, as }) => {
   return <p>{title}</p>;
 };
 
-const TodoItem = ({ todo }) => {
+const TodoItem = ({ todo, toggleTodoListItemStatus, deleteTodoListItem }) => {
+  const handleToggleTodoListItemStatus = () => toggleTodoListItemStatus(todo.id, todo.done);
+
+  const handleDeleteTodoListItemStatus = () => deleteTodoListItem(todo.id);
   return (
     <li>
       {todo.content}
-      <button>
+      <button onClick={handleToggleTodoListItemStatus}>
         {todo.done ? "未完了リストへ" : "完了リストへ"}
       </button>
-      <button>削除</button>
+      <button onClick={handleDeleteTodoListItemStatus}>削除</button>
     </li>
   );
 };
 
-const TodoList = ({ todoList }) => {
+const TodoList = ({ todoList, toggleTodoListItemStatus, deleteTodoListItem }) => {
   return (
     <ul>
       {todoList.map((todo) => {
         return (
-          <TodoItem key={todo.id} todo={todo}/>
+          <TodoItem key={todo.id} todo={todo} toggleTodoListItemStatus={toggleTodoListItemStatus} deleteTodoListItem={deleteTodoListItem} />
         );
       })}
     </ul>
@@ -47,7 +50,9 @@ const TodoAdd = ({ inputEl, handleAddTodoListItem }) => {
 function App() {
   const { 
     todoList,
-    addTodoListItem 
+    addTodoListItem,
+    toggleTodoListItemStatus,
+    deleteTodoListItem
   } = useTodo();
 
   //useRefでrefオブジェクトを作成（Todo入力フォームで利用）
@@ -77,10 +82,10 @@ function App() {
       <TodoTitle title="TODO進捗管理" as="h1"/>
       <TodoAdd inputEl={inputEl} handleAddTodoListItem={handleAddTodoListItem}/>
       <TodoTitle title="未完了TODOリスト" as="h2"/>
-      <TodoList todoList={todoInCompletedList} />
+      <TodoList todoList={todoInCompletedList} toggleTodoListItemStatus={toggleTodoListItemStatus} deleteTodoListItem={deleteTodoListItem} />
 
       <TodoTitle title="完了TODOリスト" as="h2"/>
-      <TodoList todoList={todoCompletedList} />
+      <TodoList todoList={todoCompletedList} toggleTodoListItemStatus={toggleTodoListItemStatus} deleteTodoListItem={deleteTodoListItem} />
     </>
   );
 }
