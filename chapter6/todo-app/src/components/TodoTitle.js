@@ -1,10 +1,11 @@
 import React from "react";
 
-export const TodoTitle = ({ title, as }) => {
-    //asがh1ならばタイトルはh2タグ
-    if (as === "h1") return <h1>{title}</h1>;
+import { Heading } from "@chakra-ui/react";
 
-    if (as === "h2") return <h2>{title}</h2>;
-
-    return <p>{title}</p>;
+export const TodoTitle = ({ title, as, fontSize, mt }) => {
+    return (
+    <Heading mt={mt} as={as} fontSize={fontSize} w="full">
+        {title}
+    </Heading>
+    );
 };

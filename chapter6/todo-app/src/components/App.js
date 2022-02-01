@@ -1,11 +1,17 @@
 import React, { useRef } from "react";
+//ChakraUIのContainerコンポーネントを利用できるようにする
+import { Container } from "@chakra-ui/react";
+
+//ChakraUI IconsのAddIconを利用できるようにする
+import { AddIcon } from "@chakra-ui/icons";
+
 import { useTodo } from "../hooks/useTodo";
 import { TodoAdd } from "./TodoAdd";
 import { TodoTitle } from "./TodoTitle";
 import { TodoList } from "./TodoList";
 
 function App() {
-  const { 
+  const {
     todoList,
     addTodoListItem,
     toggleTodoListItemStatus,
@@ -35,12 +41,31 @@ function App() {
   console.log("完了リスト", todoCompletedList);//完了リスト
 
   return (
-    <>
-      <TodoTitle title="TODO進捗管理" as="h1"/>
-      <TodoAdd inputEl={inputEl} handleAddTodoListItem={handleAddTodoListItem}/>
-      <TodoList title="未完了TODOリスト" as="h2" todoList={todoInCompletedList} toggleTodoListItemStatus={toggleTodoListItemStatus} deleteTodoListItem={deleteTodoListItem} />
-      <TodoList title="完了TODOリスト" as="h2" todoList={todoCompletedList} toggleTodoListItemStatus={toggleTodoListItemStatus} deleteTodoListItem={deleteTodoListItem} />
-    </>
+    <Container centerContent p={{ base: "4", md: "6" }} maxWidth={"3xl"}>
+      <TodoTitle title="TODO進捗管理" as="h1"
+        //モバイル表示でfont-sizeは2xl = 1.5rem = 24px、最初のBreakpoint "md" = "46em" (=768px)を境界として
+        //PC表示でfont-sizeは3xl = 1.875rem = 30px
+        fontSize={{ base: "2xl", md: "3xl" }} />
+      <TodoAdd
+        placeholder="Add TODO"
+        leftIcon={<AddIcon />}
+        buttonText="TODOを追加"
+        inputEl={inputEl} handleAddTodoListItem={handleAddTodoListItem} />
+      <TodoList 
+        title="未完了TODOリスト" 
+        as="h2" 
+        todoList={todoInCompletedList} 
+        toggleTodoListItemStatus={toggleTodoListItemStatus} 
+        deleteTodoListItem={deleteTodoListItem}
+        fontSize={{ base: "xl", md: "2xl" }} />
+      <TodoList
+        title="完了TODOリスト"
+        as="h2" 
+        todoList={todoCompletedList} 
+        toggleTodoListItemStatus={toggleTodoListItemStatus} 
+        deleteTodoListItem={deleteTodoListItem}
+        fontSize={{ base: "xl", md: "2xl" }} />
+    </Container>
   );
 }
 
